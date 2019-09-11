@@ -1,0 +1,44 @@
+version: "3"
+
+services:
+  php:
+    build:
+      context: ./docker/php
+    volumes:
+        - ./project:/var/www/html
+        - ./docker/php/php-fpm.d/www.conf:/usr/local/etc/php-fpm.d/www.conf
+        - ./docker/php/php-fpm.d/log/:/var/log/php-fpm/
+        - ./docker/php/php-fpm.d/log/php-fpm.log://usr/local/var/log/php-fpm.log
+        - ./docker/php/php-fpm.d/php-fpm.conf:/usr/local/etc/php-fpm.conf
+    ports:
+        - 9000:9000
+    privileged: true
+
+
+  mysql:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    volumes:
+      - ./docker/mysql/config/my.cnf:/etc/my.cnf
+      - ./docker/mysql/data:/var/lib/mysql
+    ports:
+       - "8080:3306"
+    depends_on:
+            - php
+
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "8088:80"
+    depends_on:
+      - php
+    volumes:
+      - ./docker/nginx/config:/etc/nginx/conf.d
+      - ./docker/nginx/logs:/etc/nginx/logs/
+      - ./project:/var/www/html
+    depends_on:
+            - php
