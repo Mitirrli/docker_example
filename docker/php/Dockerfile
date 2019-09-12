@@ -14,15 +14,16 @@ RUN apt-get update && \
         libmcrypt-dev \
         libpng-dev \
         libjpeg-dev \
+        procps \
+        lsof \
     && rm -rf /var/lib/apt/lists/* \
-
     # composer
     && curl -sS https://getcomposer.org/installer \
             | php -- --install-dir=/usr/local/bin --filename=composer \
     # 国内镜像加速
     && composer config -g repo.packagist composer https://mirrors.aliyun.com/composer/ \
-#    && pecl install xdebug \
-#    && echo "zend_extension=$(find /usr/local/lib/php/extensions/ -name xdebug.so)" > /usr/local/etc/php/conf.d/xdebug.ini.off
+    && pecl install xdebug \
+    && echo "zend_extension=$(find /usr/local/lib/php/extensions/ -name xdebug.so)" > /usr/local/etc/php/conf.d/xdebug.ini.off
 
 # yaconf
 RUN pecl install yaconf && docker-php-ext-enable yaconf && \
