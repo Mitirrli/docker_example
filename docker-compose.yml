@@ -10,7 +10,7 @@ services:
         - ./docker/php/php-fpm.d/log/:/var/log/php-fpm/
         - ./docker/php/php-fpm.d/log/php-fpm.log://usr/local/var/log/php-fpm.log
         - ./docker/php/php-fpm.d/php-fpm.conf:/usr/local/etc/php-fpm.conf
-        - ./project/yaconf/:/usr/local/etc/yaconf
+        - ./docker/conf/yaconf/:/usr/local/etc/yaconf/
     ports:
         - 9000:9000
     privileged: true
@@ -41,8 +41,6 @@ services:
       - ./docker/nginx/config:/etc/nginx/conf.d
       - ./docker/nginx/logs:/etc/nginx/logs/
       - ./project:/var/www/html
-    depends_on:
-            - php
 
   # redis:
   #   image: redis:5.0.5
@@ -51,4 +49,3 @@ services:
   #   volumes:
   #     - ./docker/redis/data:/data
 
-  
