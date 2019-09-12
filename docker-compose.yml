@@ -10,25 +10,26 @@ services:
         - ./docker/php/php-fpm.d/log/:/var/log/php-fpm/
         - ./docker/php/php-fpm.d/log/php-fpm.log://usr/local/var/log/php-fpm.log
         - ./docker/php/php-fpm.d/php-fpm.conf:/usr/local/etc/php-fpm.conf
+        - ./docker/conf/yaconf/:/usr/local/etc/yaconf/
     ports:
         - 9000:9000
     privileged: true
 
 
-  mysql:
-    image: mysql:5.7
-    environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_DATABASE: ${MYSQL_DATABASE}
-      MYSQL_USER: ${MYSQL_USER}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-    volumes:
-      - ./docker/mysql/config/my.cnf:/etc/my.cnf
-      - ./docker/mysql/data:/var/lib/mysql
-    ports:
-       - "8080:3306"
-    depends_on:
-            - php
+  # mysql:
+  #   image: mysql:5.7
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+  #     MYSQL_DATABASE: ${MYSQL_DATABASE}
+  #     MYSQL_USER: ${MYSQL_USER}
+  #     MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+  #   volumes:
+  #     - ./docker/mysql/config/my.cnf:/etc/my.cnf
+  #     - ./docker/mysql/data:/var/lib/mysql
+  #   ports:
+  #      - "8080:3306"
+  #   depends_on:
+  #           - php
 
   nginx:
     image: nginx:alpine
@@ -40,14 +41,11 @@ services:
       - ./docker/nginx/config:/etc/nginx/conf.d
       - ./docker/nginx/logs:/etc/nginx/logs/
       - ./project:/var/www/html
-    depends_on:
-            - php
 
-  redis:
-    image: redis:5.0.5
-    ports:
-      - "6355:6379"
-    volumes:
-      - ./docker/redis/data:/data
+  # redis:
+  #   image: redis:5.0.5
+  #   ports:
+  #     - "6355:6379"
+  #   volumes:
+  #     - ./docker/redis/data:/data
 
-  
