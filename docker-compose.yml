@@ -43,11 +43,11 @@ services:
     depends_on:
             - php
 
-   redis:
-      image: redis:5.0.5
-      ports:
-        - "6355:6379"
-      volumes:
-        - ./docker/redis/data:/data
+  redis:
+    image: redis:5.0.5
+    ports:
+      - "6355:6379"
+    volumes:
+      - ./docker/redis/data:/data
 
   
