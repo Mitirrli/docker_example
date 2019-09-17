@@ -35,6 +35,9 @@ RUN pecl install yaconf && docker-php-ext-enable yaconf && \
 # sql
 RUN docker-php-ext-install mysqli \
     && docker-php-ext-install pdo_mysql
+    # && docker-php-ext-install pcntl \
+    # && pecl install swoole \
+    # && docker-php-ext-enable swoole
 
 RUN docker-php-ext-configure gd \
       --enable-gd-native-ttf \
